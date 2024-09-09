@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common"
 import { DeetlistPagesService } from "./pages.service"
 
-@Controller("pages")
+@Controller("deetlist/pages")
 export class DeetlistPagesController {
     constructor(private readonly deetlistPagesService: DeetlistPagesService) {}
 
