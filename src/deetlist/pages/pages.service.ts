@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common"
 import { AxiosClient } from "xcrap/clients"
 
-import deetlistHomePageParsingModel from "../../scraping/parsing-models/deetlist-home-page.pmodel"
 import deetlistFogIslandsPageParsingModel from "src/scraping/parsing-models/deetlist-fog-islands-page.pmodel"
+import deetlistEventsPageParsinModel from "src/scraping/parsing-models/deetlist-events-page.pmodel"
+import deetlistHomePageParsingModel from "../../scraping/parsing-models/deetlist-home-page.pmodel"
 
 @Injectable()
 export class DeetlistPagesService {
@@ -19,8 +20,13 @@ export class DeetlistPagesService {
         const pageData = pagePaser.parseItem({ model: deetlistHomePageParsingModel })
         return pageData
     }
-    
-    async scrapeEventsPageData() {}
+
+    async scrapeEventsPageData() {
+        const url = `${this.baseUrl}/events`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistEventsPageParsinModel })
+        return pageData
+    }
 
     async scrapeHeroicRacesEventPageData() {}
 
