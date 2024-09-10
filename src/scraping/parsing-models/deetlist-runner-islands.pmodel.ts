@@ -2,7 +2,7 @@ import { extractInnerText, ParsingModel } from "xcrap/parsing"
 
 import deetlistEventDragonParsingModel from "./common/deetlist-event-dragon.pmodel"
 import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import pageMetadataParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
 const pageBodyParsingModel = {
@@ -12,14 +12,6 @@ const pageBodyParsingModel = {
     },
     eventDuration: {
         query: ".dur_text",
-        extractor: extractInnerText,
-    },
-    textAboutCollectingPoints: {
-        query: ".tkn_text",
-        extractor: extractInnerText,
-    },
-    totalPointsPerCollection: {
-        query: ".tkn_hold div b",
         extractor: extractInnerText,
     },
     dragons: {
@@ -40,10 +32,10 @@ const pageBodyParsingModel = {
     dragonsDataScript: dragonsDataScriptField,
 } satisfies ParsingModel
 
-const deetlistFogIslandsPageParsingModel = {
+const deetlistRunnerIslandsPageParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMetadataParsingModel,
     },
     body: {
         query: "body",
@@ -51,4 +43,4 @@ const deetlistFogIslandsPageParsingModel = {
     },
 } satisfies ParsingModel
 
-export default deetlistFogIslandsPageParsingModel
+export default deetlistRunnerIslandsPageParsingModel

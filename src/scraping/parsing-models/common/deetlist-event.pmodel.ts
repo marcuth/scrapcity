@@ -1,17 +1,17 @@
 import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
 
-const deetlistPageBodyEventParsingModel = {
+const deetlistEventParsingModel = {
     title: {
         query: ".ei",
         extractor: extractInnerText,
     },
-    iconUrl: {
+    iconPath: {
         query: "img",
         extractor: extractAttribute("src"),
     },
-    pageUrl: {
+    pagePath: {
         extractor: extractAttribute("href"),
     },
 } satisfies ParsingModel
 
-export default deetlistPageBodyEventParsingModel
+export default deetlistEventParsingModel

@@ -1,12 +1,13 @@
 import { extractInnerText, ParsingModel } from "xcrap/parsing"
 
-import eventPageBodyEventParsingModel from "./deetlist-page-body-event.pmodel"
-import pageMetadataParsingModel from "./page-metadata.pmodel"
+import eventPageBodyEventParsingModel from "./common/deetlist-event.pmodel"
+import pageMetadataParsingModel from "./common/page-metadata.pmodel"
+import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const deetlistEventsPageBodyParsingModel = {
+const pageBodyParsingModel = {
     heading: {
         query: "h1",
-        extractor: extractInnerText
+        extractor: extractInnerText,
     },
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
@@ -23,17 +24,18 @@ const deetlistEventsPageBodyParsingModel = {
         model: eventPageBodyEventParsingModel,
         isGroup: true,
     },
+    dragonsDataScript: dragonsDataScriptField,
 } satisfies ParsingModel
 
-const deetlistEventsPageParsinModel = {
+const deetlistEventsPageParsingModel = {
     metadata: {
         query: "head",
         model: pageMetadataParsingModel,
     },
     body: {
         query: "body",
-        model: deetlistEventsPageBodyParsingModel,
-    }
+        model: pageBodyParsingModel,
+    },
 } satisfies ParsingModel
 
-export default deetlistEventsPageParsinModel
+export default deetlistEventsPageParsingModel

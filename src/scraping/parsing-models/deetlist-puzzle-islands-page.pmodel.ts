@@ -5,26 +5,45 @@ import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
 import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
+const missionParsingModel = {
+    title: {
+        query: ".miss_con",
+        extractor: extractInnerText,
+    },
+    amount: {
+        query: ".moves_h",
+        extractor: extractInnerText,
+    },
+} satisfies ParsingModel
+
 const pageBodyParsingModel = {
     name: {
         query: "h1",
         extractor: extractInnerText,
     },
-    eventDuration: {
-        query: ".dur_text",
-        extractor: extractInnerText,
-    },
-    textAboutCollectingPoints: {
-        query: ".tkn_text",
-        extractor: extractInnerText,
-    },
-    totalPointsPerCollection: {
-        query: ".tkn_hold div b",
-        extractor: extractInnerText,
-    },
     dragons: {
         query: ".over",
         model: deetlistEventDragonParsingModel,
+        isGroup: true,
+    },
+    missions1: {
+        query: ".m_h[id^='1_']",
+        model: missionParsingModel,
+        isGroup: true,
+    },
+    missions2: {
+        query: ".m_h[id^='2_']",
+        model: missionParsingModel,
+        isGroup: true,
+    },
+    missions3: {
+        query: ".m_h[id^='3_']",
+        model: missionParsingModel,
+        isGroup: true,
+    },
+    missions4: {
+        query: ".m_h[id^='4_']",
+        model: missionParsingModel,
         isGroup: true,
     },
     currentEvents: {
@@ -40,7 +59,7 @@ const pageBodyParsingModel = {
     dragonsDataScript: dragonsDataScriptField,
 } satisfies ParsingModel
 
-const deetlistFogIslandsPageParsingModel = {
+const deetlistPuzzleIslandsPageParsingModel = {
     metadata: {
         query: "head",
         model: pageMedatadaParsingModel,
@@ -51,4 +70,4 @@ const deetlistFogIslandsPageParsingModel = {
     },
 } satisfies ParsingModel
 
-export default deetlistFogIslandsPageParsingModel
+export default deetlistPuzzleIslandsPageParsingModel

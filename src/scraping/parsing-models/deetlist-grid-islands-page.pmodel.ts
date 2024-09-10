@@ -40,7 +40,7 @@ const pageBodyParsingModel = {
     dragonsDataScript: dragonsDataScriptField,
 } satisfies ParsingModel
 
-const deetlistFogIslandsPageParsingModel = {
+const deetlistGridIslandsPageParsingModel = {
     metadata: {
         query: "head",
         model: pageMedatadaParsingModel,
@@ -51,4 +51,4 @@ const deetlistFogIslandsPageParsingModel = {
     },
 } satisfies ParsingModel
 
-export default deetlistFogIslandsPageParsingModel
+export default deetlistGridIslandsPageParsingModel

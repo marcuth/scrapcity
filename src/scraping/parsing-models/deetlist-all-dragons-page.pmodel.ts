@@ -1,30 +1,23 @@
-import { extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
 
-import deetlistEventDragonParsingModel from "./common/deetlist-event-dragon.pmodel"
 import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
 import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const pageBodyParsingModel = {
+const dragonParsingModel = {
     name: {
-        query: "h1",
+        query: ".drag",
         extractor: extractInnerText,
     },
-    eventDuration: {
-        query: ".dur_text",
-        extractor: extractInnerText,
+    pagePath: {
+        extractor: extractAttribute("href"),
     },
-    textAboutCollectingPoints: {
-        query: ".tkn_text",
-        extractor: extractInnerText,
-    },
-    totalPointsPerCollection: {
-        query: ".tkn_hold div b",
-        extractor: extractInnerText,
-    },
+} satisfies ParsingModel
+
+const pageBodyParsingModel = {
     dragons: {
-        query: ".over",
-        model: deetlistEventDragonParsingModel,
+        query: ".drag_link:has(.drag)",
+        model: dragonParsingModel,
         isGroup: true,
     },
     currentEvents: {
@@ -40,7 +33,7 @@ const pageBodyParsingModel = {
     dragonsDataScript: dragonsDataScriptField,
 } satisfies ParsingModel
 
-const deetlistFogIslandsPageParsingModel = {
+const deetlistAllDragonPageParsingModel = {
     metadata: {
         query: "head",
         model: pageMedatadaParsingModel,
@@ -51,4 +44,4 @@ const deetlistFogIslandsPageParsingModel = {
     },
 } satisfies ParsingModel
 
-export default deetlistFogIslandsPageParsingModel
+export default deetlistAllDragonPageParsingModel

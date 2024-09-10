@@ -16,52 +16,52 @@ export class DeetlistPagesController {
         return await this.deetlistPagesService.scrapeEventsPageData()
     }
 
-    @Get("events:fog-islands")
+    @Get("events/fog-islands")
     async getFogIslandsEventPage() {
         return await this.deetlistPagesService.scrapeFogIslandsEventPageData()
     }
 
-    @Get("events:grid-islands")
+    @Get("events/grid-islands")
     async getGridIslandsEventPage() {
         return await this.deetlistPagesService.scrapeGridIslandsEventPageData()
     }
 
-    @Get("events:heroic-races")
+    @Get("events/heroic-races")
     async getHeroicRacesEventPage() {
         return await this.deetlistPagesService.scrapeHeroicRacesEventPageData()
     }
 
-    @Get("events:maze-islands")
+    @Get("events/maze-islands")
     async getMazeIslandsEventPage() {
         return await this.deetlistPagesService.scrapeMazeIslandsEventPageData()
     }
 
-    @Get("events:runner-islands")
+    @Get("events/runner-islands")
     async getRunnerIslandsEventPage() {
         return await this.deetlistPagesService.scrapeRunnerIslandsEventPageData()
     }
 
-    @Get("events:puzzle-islands")
+    @Get("events/puzzle-islands")
     async getPuzzleIslandsEventPage() {
         return await this.deetlistPagesService.scrapePuzzleIslandsEventPageData()
     }
 
-    @Get("events:tower-islands")
+    @Get("events/tower-islands")
     async getTowerIslandsEventPage() {
         return await this.deetlistPagesService.scrapeTowerIslandsEventPageData()
     }
 
-    @Get("dragons:all")
+    @Get("dragons/all")
     async getAllDragonsPage() {
         return await this.deetlistPagesService.scrapeAllDragonsPageData()
     }
 
-    @Get("dragons:breedable-category-5")
+    @Get("dragons/breedable-category-5")
     async getAllBreedableCategory5DragonsPage() {
         return await this.deetlistPagesService.scrapeAllBreedableCategory5DragonsPageData()
     }
 
-    @Get("dragons:all-heroic")
+    @Get("dragons/all-heroic")
     async getAllHeroicDragonsPage() {
         return await this.deetlistPagesService.scrapeAllHeroicDragonsPageData()
     }
@@ -71,12 +71,12 @@ export class DeetlistPagesController {
         return await this.deetlistPagesService.scrapeAllBreedableCategory9DragonsPageData()
     }
 
-    @Get("dragons:breedable-legendary")
+    @Get("dragons/breedable-legendary")
     async getAllBreedableLegendaryDragonsPage() {
         return await this.deetlistPagesService.scrapeAllBreedableLegendaryDragonsPageData()
     }
 
-    @Get("dragons:categorize-by-attacks")
+    @Get("dragons/categorize-by-attacks")
     async getHeroicDragonsCategorizedByAttacksPage() {
         return await this.deetlistPagesService.scrapeHeroicDragonsCategorizedByAttacksPageData()
     }

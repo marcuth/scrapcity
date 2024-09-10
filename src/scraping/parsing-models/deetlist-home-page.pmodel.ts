@@ -1,19 +1,28 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { ParsingModelValue } from "xcrap/parsing/page.parsing"
+import { extractInnerText, ParsingModel } from "xcrap/parsing"
 
-import deetlistPageBodyEventParsingModel from "./deetlist-page-body-event.pmodel"
-import pageMedatadaParsingModel from "./page-metadata.pmodel"
+import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
+import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
 
-const deetlistHomePageBodyParsingModel = {
+export const dragonsDataScriptField: ParsingModelValue = {
+    query: "#low_menu",
+    extractor: (element) => {
+        return extractInnerText(element.previousElementSibling)
+    },
+}
+
+const pageBodyParsingModel = {
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
-        model: deetlistPageBodyEventParsingModel,
+        model: deetlistEventParsingModel,
         isGroup: true,
     },
     upcomingEvents: {
         query: "h3.see_ev.ev_upc ~ a.eata",
-        model: deetlistPageBodyEventParsingModel,
+        model: deetlistEventParsingModel,
         isGroup: true,
     },
+    dragonsDataScript: dragonsDataScriptField,
 } satisfies ParsingModel
 
 const deetlistHomePageParsingModel = {
@@ -23,7 +32,7 @@ const deetlistHomePageParsingModel = {
     },
     body: {
         query: "body",
-        model: deetlistHomePageBodyParsingModel,
+        model: pageBodyParsingModel,
     },
 } satisfies ParsingModel
 
