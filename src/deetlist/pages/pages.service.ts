@@ -1,17 +1,24 @@
 import { Injectable } from "@nestjs/common"
 import { AxiosClient } from "xcrap/clients"
-import { parse } from "node-html-parser"
- 
-import deetlistPuzzleIslandsPageParsingModel from "src/scraping/parsing-models/deetlist-puzzle-islands-page.pmodel"
-import deetlistHeroicRacesPageParsingModel from "src/scraping/parsing-models/deetlist-heroic-races-page.pmodel"
-import deetlistGridIslandsPageParsingModel from "src/scraping/parsing-models/deetlist-grid-islands-page.pmodel"
-import deetlistRunnerIslandsPageParsingModel from "src/scraping/parsing-models/deetlist-runner-islands.pmodel"
-import deetlistFogIslandsPageParsingModel from "src/scraping/parsing-models/deetlist-fog-islands-page.pmodel"
-import deetlistAllDragonPageParsingModel from "src/scraping/parsing-models/deetlist-all-dragons-page.pmodel"
-import deetlistMazeIslandsPageParsingModel from "src/scraping/parsing-models/deetlist-maze-island.pmodel"
-import deetlistEventsPageParsingModel from "src/scraping/parsing-models/deetlist-events-page.pmodel"
+
+import deetlistAllBreedableCategory9DragonsPageParsingModel from "../../scraping/parsing-models/deetlist-all-breedable-category-9-dragons-page.pmodel"
+import deetlistAllBreedableCategory5DragonsPageParsingModel from "../../scraping/parsing-models/deetlist-all-breedable-category-5-dragons-page.pmodel"
+import deetlistAllBreedableLegendaryDragonsPageParsingModel from "../../scraping/parsing-models/deetlist-all-breedable-legendary-dragons-page.pmodel"
+import deetlistHeroicDragonsCategorizedByAttacksParsingModel from "../../scraping/parsing-models/deetlist-best-heroic-dragons-by-attack.pmodel"
+import deetlistAllHeroicDragonsPageParsingModel from "../../scraping/parsing-models/deetlist-all-heroic-dragons-page.pmodel"
+import deetlistPuzzleIslandsPageParsingModel from "../../scraping/parsing-models/deetlist-puzzle-islands-page.pmodel"
+import deetlistElementTokensPageParsingModel from "../../scraping/parsing-models/deetlist-element-tokens-page.pmodel"
+import deetlistNewestDragonsPageParsingModel from "../../scraping/parsing-models/deetlits-newest-dragons-page.pmodel"
+import deetlistTowerIslandsPageParsingModel from "../../scraping/parsing-models/deetlist-tower-islands-page.pmodel"
+import deetlistHeroicRacesPageParsingModel from "../../scraping/parsing-models/deetlist-heroic-races-page.pmodel"
+import deetlistGridIslandsPageParsingModel from "../../scraping/parsing-models/deetlist-grid-islands-page.pmodel"
+import deetlistRunnerIslandsPageParsingModel from "../../scraping/parsing-models/deetlist-runner-islands.pmodel"
+import deetlistFogIslandsPageParsingModel from "../../scraping/parsing-models/deetlist-fog-islands-page.pmodel"
+import deetlistAllDragonPageParsingModel from "../../scraping/parsing-models/deetlist-all-dragons-page.pmodel"
+import deetlistMazeIslandsPageParsingModel from "../../scraping/parsing-models/deetlist-maze-island.pmodel"
+import deetlistElementsPageParsingModel from "../../scraping/parsing-models/deetlist-elements-page.pmodel"
+import deetlistEventsPageParsingModel from "../../scraping/parsing-models/deetlist-events-page.pmodel"
 import deetlistHomePageParsingModel from "../../scraping/parsing-models/deetlist-home-page.pmodel"
-import deetlistTowerIslandsPageParsingModel from "src/scraping/parsing-models/deetlist-tower-islands-page.pmodel"
 
 @Injectable()
 export class DeetlistPagesService {
@@ -92,21 +99,59 @@ export class DeetlistPagesService {
         return pageData
     }
 
-    async scrapeBestHeroicDragonsByAttack() {}
+    async scrapeHeroicDragonsCategorizedByAttacksPageData() {
+        const url = `${this.baseUrl}/dragons/report/heroics_by_attack.php`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistHeroicDragonsCategorizedByAttacksParsingModel })
+        return pageData
+    }
 
-    async scrapeNewestDragonsPageData() {}
+    async scrapeNewestDragonsPageData() {
+        const url = `${this.baseUrl}/new-dragons/`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistNewestDragonsPageParsingModel })
+        return pageData
+    }
 
-    async scrapeAllHeroicDragonsPageData() {}
+    async scrapeAllHeroicDragonsPageData() {
+        const url = `${this.baseUrl}/dragons/report/all_heroic.php`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistAllHeroicDragonsPageParsingModel })
+        return pageData
+    }
 
-    async scrapeAllBreedableCategory5DragonsPageData() {}
+    async scrapeAllBreedableCategory5DragonsPageData() {
+        const url = `${this.baseUrl}/dragons/report/cat5_breedable.php`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistAllBreedableCategory5DragonsPageParsingModel })
+        return pageData
+    }
 
-    async scrapeAllBreedableCategory9DragonsPageData() {}
+    async scrapeAllBreedableCategory9DragonsPageData() {
+        const url = `${this.baseUrl}/dragons/report/cat9_breedable.php`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistAllBreedableCategory9DragonsPageParsingModel })
+        return pageData
+    }
 
-    async scrapeAllBreedableLegendaryDragonsPageData() {}
+    async scrapeAllBreedableLegendaryDragonsPageData() {
+        const url = `${this.baseUrl}/dragons/report/leg_breedable.php`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistAllBreedableLegendaryDragonsPageParsingModel })
+        return pageData
+    }
 
-    async scrapeElementTokensPageData() {}
+    async scrapeElementTokensPageData() {
+        const url = `${this.baseUrl}/tokens/`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistElementTokensPageParsingModel })
+        return pageData
+    }
 
-    async scrapeElementsPageData() {}
-
-    async scrapeHeroicDragonsCategorizedByAttacksPageData() {}
+    async scrapeElementsPageData() {
+        const url = `${this.baseUrl}/elements/`
+        const pagePaser = await this.client.get(url)
+        const pageData = pagePaser.parseItem({ model: deetlistElementsPageParsingModel })
+        return pageData
+    }
 }

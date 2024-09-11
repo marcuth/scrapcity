@@ -7,4 +7,4 @@ import { DeetlistPagesService } from "./pages.service"
     providers: [DeetlistPagesService],
     controllers: [DeetlistPagesController],
 })
-export class PagesModule {}
+export class DeetlistPagesModule {}

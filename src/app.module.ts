@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common"
 
-import { PagesModule } from "./deetlist/pages/pages.module"
+import { DeetlistPagesModule } from "./deetlist/pages/pages.module"
 
 @Module({
-    imports: [PagesModule],
+    imports: [DeetlistPagesModule],
     controllers: [],
     providers: [],
 })

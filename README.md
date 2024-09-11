@@ -28,71 +28,75 @@ Since Deetlist doesn't have an API, our only alternative is to extract the data 
 
 ##### Home (/)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### All Events (/events)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### All Dragons (/all-dragons)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### Fog Island (/events/fog)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### Grid Island (/events/grid)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### Puzzle Island (/events/puzzle)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### Runner Island (/events/runner)
 - [x] Parsing Model (incomplete)
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### Tower Island (/events/puzzle)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 ##### Maze Island (/events/maze)
 - [x] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 #### All Heroic Dragons (/dragons/report/all_heroic.php)
-- [ ] Parsing Model
-- [ ] Transforming Model
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
 
 #### All Breedable Category 5 Dragons (/dragons/report/cat5_breedable.php)
-- [ ] Parsing Model
-- [ ] Transforming Model
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
 
 #### All Breedable Category 9 Dragons (/dragons/report/cat9_breedable.php)
-- [ ] Parsing Model
-- [ ] Transforming Model
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
 
 #### All Breedable Legendary Dragons (/dragons/report/leg_breedable.php)
-- [ ] Parsing Model
-- [ ] Transforming Model
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
 
 #### Best Heroic Dragons By Attack (/dragons/report/heroics_by_attack.php)
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
+
+#### Dragon (/dragon/[slug])
 - [ ] Parsing Model
-- [ ] Transforming Model
+- [ ] Trasnformation Model Model
 
 #### Newest Dragons (/new-dragons/)
-- [ ] Parsing Model
-- [ ] Transforming Model
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
 
 #### Element Tokens (/tokens/)
-- [ ] Parsing Model
-- [ ] Transforming Model
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
 
 #### Elements (/elements/)
-- [ ] Parsing Model
-- [ ] Transforming Model
+- [x] Parsing Model
+- [ ] Trasnformation Model Model
 
 ---
 

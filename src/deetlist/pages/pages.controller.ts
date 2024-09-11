@@ -76,7 +76,7 @@ export class DeetlistPagesController {
         return await this.deetlistPagesService.scrapeAllBreedableLegendaryDragonsPageData()
     }
 
-    @Get("dragons/categorize-by-attacks")
+    @Get("dragons/heroic-categorize-by-attacks")
     async getHeroicDragonsCategorizedByAttacksPage() {
         return await this.deetlistPagesService.scrapeHeroicDragonsCategorizedByAttacksPageData()
     }
@@ -89,11 +89,6 @@ export class DeetlistPagesController {
     @Get("elements")
     async getElementsPage() {
         return await this.deetlistPagesService.scrapeElementsPageData()
-    }
-
-    @Get("dragons/best-heroic-by-attack")
-    async getBestHeroicDragonsByAttack() {
-        return await this.deetlistPagesService.scrapeBestHeroicDragonsByAttack()
     }
 
     @Get("dragons/newest")
