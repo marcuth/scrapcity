@@ -10,6 +10,16 @@ Personally I do not have anything that depends on this project, I am doing it mo
 
 ---
 
+## API
+
+### Routes
+
+#### `/deetlist/pages/home`
+
+This route will return some data from the home page, such as metadata, event information, and an object containing all the dragons in the game.
+
+[...]
+
 ## Plans
 
 We are planning to scrape data from a few websites:
