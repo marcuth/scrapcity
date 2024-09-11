@@ -159,7 +159,6 @@ export class DeetlistPagesService {
     async scrapeDragonPageData(name: string) {
         const url = `${this.baseUrl}/dragon/${name}`
         const pagePaser = await this.client.get(url)
-        console.log(pagePaser.document.querySelectorAll("p+ .b_split .att_hold").map((e) => e.toString()))
         const pageData = pagePaser.parseItem({ model: deetlistDragonPageParsingModel })
         return pageData
     }
