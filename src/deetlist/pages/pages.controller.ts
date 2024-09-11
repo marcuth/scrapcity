@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common"
+import { Controller, Get, Param } from "@nestjs/common"
 
 import { DeetlistPagesService } from "./pages.service"
 
@@ -94,5 +94,10 @@ export class DeetlistPagesController {
     @Get("dragons/newest")
     async getNewestDragonsPageData() {
         return await this.deetlistPagesService.scrapeNewestDragonsPageData()
+    }
+
+    @Get("dragons/:name")
+    async getDragonPage(@Param("name") name: string) {
+        return await this.deetlistPagesService.scrapeDragonPageData(name)
     }
 }

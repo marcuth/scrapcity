@@ -83,7 +83,7 @@ Since Deetlist doesn't have an API, our only alternative is to extract the data 
 - [ ] Trasnformation Model Model
 
 #### Dragon (/dragon/[slug])
-- [ ] Parsing Model
+- [x] Parsing Model
 - [ ] Trasnformation Model Model
 
 #### Newest Dragons (/new-dragons/)

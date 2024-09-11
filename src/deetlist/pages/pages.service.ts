@@ -18,6 +18,7 @@ import deetlistAllDragonPageParsingModel from "../../scraping/parsing-models/dee
 import deetlistMazeIslandsPageParsingModel from "../../scraping/parsing-models/deetlist-maze-island.pmodel"
 import deetlistElementsPageParsingModel from "../../scraping/parsing-models/deetlist-elements-page.pmodel"
 import deetlistEventsPageParsingModel from "../../scraping/parsing-models/deetlist-events-page.pmodel"
+import deetlistDragonPageParsingModel from "../../scraping/parsing-models/deetlist-dragon-page.pmodel"
 import deetlistHomePageParsingModel from "../../scraping/parsing-models/deetlist-home-page.pmodel"
 
 @Injectable()
@@ -152,6 +153,14 @@ export class DeetlistPagesService {
         const url = `${this.baseUrl}/elements/`
         const pagePaser = await this.client.get(url)
         const pageData = pagePaser.parseItem({ model: deetlistElementsPageParsingModel })
+        return pageData
+    }
+
+    async scrapeDragonPageData(name: string) {
+        const url = `${this.baseUrl}/dragon/${name}`
+        const pagePaser = await this.client.get(url)
+        console.log(pagePaser.document.querySelectorAll("p+ .b_split .att_hold").map((e) => e.toString()))
+        const pageData = pagePaser.parseItem({ model: deetlistDragonPageParsingModel })
         return pageData
     }
 }
