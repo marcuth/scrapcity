@@ -90,4 +90,14 @@ export class DeetlistPagesController {
     async getElementsPage() {
         return await this.deetlistPagesService.scrapeElementsPageData()
     }
+
+    @Get("dragons/best-heroic-by-attack")
+    async getBestHeroicDragonsByAttack() {
+        return await this.deetlistPagesService.scrapeBestHeroicDragonsByAttack()
+    }
+
+    @Get("dragons/newest")
+    async getNewestDragonsPageData() {
+        return await this.deetlistPagesService.scrapeNewestDragonsPageData()
+    }
 }

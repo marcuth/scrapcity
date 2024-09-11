@@ -92,6 +92,10 @@ export class DeetlistPagesService {
         return pageData
     }
 
+    async scrapeBestHeroicDragonsByAttack() {}
+
+    async scrapeNewestDragonsPageData() {}
+
     async scrapeAllHeroicDragonsPageData() {}
 
     async scrapeAllBreedableCategory5DragonsPageData() {}

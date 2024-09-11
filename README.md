@@ -51,7 +51,7 @@ Since Deetlist doesn't have an API, our only alternative is to extract the data 
 - [ ] Transforming Model
 
 ##### Runner Island (/events/runner)
-- [-] Parsing Model
+- [x] Parsing Model (incomplete)
 - [ ] Transforming Model
 
 ##### Tower Island (/events/puzzle)
@@ -60,6 +60,38 @@ Since Deetlist doesn't have an API, our only alternative is to extract the data 
 
 ##### Maze Island (/events/maze)
 - [x] Parsing Model
+- [ ] Transforming Model
+
+#### All Heroic Dragons (/dragons/report/all_heroic.php)
+- [ ] Parsing Model
+- [ ] Transforming Model
+
+#### All Breedable Category 5 Dragons (/dragons/report/cat5_breedable.php)
+- [ ] Parsing Model
+- [ ] Transforming Model
+
+#### All Breedable Category 9 Dragons (/dragons/report/cat9_breedable.php)
+- [ ] Parsing Model
+- [ ] Transforming Model
+
+#### All Breedable Legendary Dragons (/dragons/report/leg_breedable.php)
+- [ ] Parsing Model
+- [ ] Transforming Model
+
+#### Best Heroic Dragons By Attack (/dragons/report/heroics_by_attack.php)
+- [ ] Parsing Model
+- [ ] Transforming Model
+
+#### Newest Dragons (/new-dragons/)
+- [ ] Parsing Model
+- [ ] Transforming Model
+
+#### Element Tokens (/tokens/)
+- [ ] Parsing Model
+- [ ] Transforming Model
+
+#### Elements (/elements/)
+- [ ] Parsing Model
 - [ ] Transforming Model
 
 ---
