@@ -75,7 +75,7 @@ const dragonParsingModel = {
     goldEarningsInfo: {
         query: ".norm_h+ p",
         extractor: extractInnerText,
-    }
+    },
 } satisfies ParsingModel
 
 const pageBodyParsingModel = {
