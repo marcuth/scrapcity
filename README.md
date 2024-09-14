@@ -1,4 +1,4 @@
-# ScrapCity
+![ScrapCity Logo png](https://github.com/user-attachments/assets/956f856f-6fdc-45df-9b6e-b5e36f4471db)
 
 ScrapCity is an API project that scrapes and centralizes data related to Dragon City.
 
