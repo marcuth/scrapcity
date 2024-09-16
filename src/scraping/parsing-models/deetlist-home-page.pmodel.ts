@@ -1,5 +1,5 @@
-import { ParsingModelValue } from "xcrap/parsing/page.parsing"
 import { extractInnerText, ParsingModel } from "xcrap/parsing"
+import { ParsingModelValue } from "xcrap/parsing/page.parsing"
 
 import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
 import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
