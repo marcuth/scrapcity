@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common"
 import axios from "axios"
+
 import qs from "qs"
 
 type GetDragonOptions = {
@@ -35,18 +36,15 @@ export class DitlepApiService {
         return data
     }
 
-    async getAllArticles({
-        pageIndex,
-        pageSize
-    }: GetAllArticlesOptions) {
+    async getAllArticles({ pageIndex, pageSize }: GetAllArticlesOptions) {
         const query = qs.stringify({
             pageIndex: pageIndex || 0,
-            pageSize: pageSize || 10
+            pageSize: pageSize || 10,
         })
 
         const path = `/article/GetAllArticles?${query}`
         const data = this.fetchData(path)
-        
+
         return data
     }
 
@@ -103,7 +101,7 @@ export class DitlepApiService {
         inStore,
         pageNumber,
         pageSize,
-        tag
+        tag,
     }: GetDragonOptions) {
         const query = qs.stringify({
             dragoName: nameOrId,
@@ -114,7 +112,7 @@ export class DitlepApiService {
             inStore: inStore ? "true" : "false",
             page: pageNumber,
             pageSize: pageSize,
-            tag: tag
+            tag: tag,
         })
 
         const path = `/Dragon/Search?${query}`
@@ -159,6 +157,4 @@ export class DitlepApiService {
         const data = this.fetchData(path)
         return data
     }
-
-    
 }

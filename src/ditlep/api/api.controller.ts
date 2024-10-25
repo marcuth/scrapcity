@@ -18,7 +18,7 @@ export class DitlepApiController {
         @Query("category") categor?: number,
         @Query("inStore") inStore?: boolean,
         @Query("isBreedable") isBreedable?: boolean,
-        @Query("tag") tag?: string
+        @Query("tag") tag?: string,
     ) {}
 
     @Get("items")
@@ -27,13 +27,11 @@ export class DitlepApiController {
         @Query("sort") sort?: string,
         @Query("pageNumber") pageNumber?: number,
         @Query("pageSize") pageSize?: number,
-        @Query("group") group?: string
+        @Query("group") group?: string,
     ) {}
 
     @Get("calculators/breeding")
-    async getBreedingCalculatorResult(
-        @Query("parentIds") parentIds: [number, number]
-    ) {}
+    async getBreedingCalculatorResult(@Query("parentIds") parentIds: [number, number]) {}
 
     @Get("quests/permanet")
     async getPermanetQuests() {}
