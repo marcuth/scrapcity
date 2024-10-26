@@ -1,19 +1,9 @@
 import { Injectable } from "@nestjs/common"
 import axios from "axios"
 
+import { GetDragonsDto } from "./dtos/get-dragons.dto"
+import { GetItemsDto } from "./dtos/get-items.dto"
 import qs from "qs"
-
-type GetDragonOptions = {
-    nameOrId?: string
-    rarities?: string[]
-    breedable?: boolean
-    elements?: string[]
-    families?: string[]
-    inStore?: boolean
-    pageNumber?: number
-    pageSize?: number
-    tag?: string
-}
 
 type GetAllArticlesOptions = {
     pageSize?: number
@@ -95,20 +85,22 @@ export class DitlepApiService {
     async getDragons({
         nameOrId,
         rarities,
-        breedable,
+        isBreedable,
         elements,
         families,
         inStore,
+        category,
         pageNumber,
         pageSize,
         tag,
-    }: GetDragonOptions) {
+    }: GetDragonsDto) {
         const query = qs.stringify({
             dragoName: nameOrId,
             rarities: rarities ? rarities.join(",") : undefined,
-            breedable: breedable ? "true" : "false",
+            breedable: isBreedable ? "true" : "false",
             elements: elements ? elements.join(",") : undefined,
             families: families ? families.join(",") : undefined,
+            category: category ? category : undefined,
             inStore: inStore ? "true" : "false",
             page: pageNumber,
             pageSize: pageSize,
@@ -119,6 +111,18 @@ export class DitlepApiService {
         const data = this.fetchData(path)
 
         return data
+    }
+
+    async getItems({ group, nameOrId, pageNumber, pageSize, sort }: GetItemsDto) {
+        const query = qs.stringify({
+            dragoName: nameOrId,
+            page: pageNumber,
+            pageSize: pageSize,
+            sort: sort ? sort : undefined,
+            group: group ? group : undefined
+        })
+
+        const path = `?${query}`
     }
 
     async getAllianceChestRanges() {

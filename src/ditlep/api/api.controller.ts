@@ -1,8 +1,12 @@
 import { Controller, Get, Query } from "@nestjs/common"
-import { ApiQuery } from "@nestjs/swagger";
+import { ApiQuery } from "@nestjs/swagger"
+
+import { DitlepApiService } from "./api.service"
 
 @Controller("ditlep/api")
 export class DitlepApiController {
+    constructor(private readonly ditlepApiService: DitlepApiService) {}
+
     @Get("alliances/chests")
     async getAllianceChests() {}
 
@@ -19,17 +23,32 @@ export class DitlepApiController {
     @ApiQuery({ name: "inStore", required: false })
     @ApiQuery({ name: "isBreedable", required: false })
     @ApiQuery({ name: "tag", required: false })
+    @ApiQuery({ name: "families", required: false })
     async getDragons(
         @Query("nameOrId") nameOrId?: string | number,
         @Query("rarities") rarities?: string[],
-        @Query("elements") elements?: string,
+        @Query("elements") elements?: string[],
         @Query("pageNumber") pageNumber?: number,
         @Query("pageSize") pageSize?: number,
-        @Query("category") categor?: number,
+        @Query("category") category?: number,
         @Query("inStore") inStore?: boolean,
+        @Query("families") families?: string[],
         @Query("isBreedable") isBreedable?: boolean,
         @Query("tag") tag?: string,
-    ) {}
+    ) {
+        return await this.ditlepApiService.getDragons({
+            nameOrId,
+            isBreedable,
+            elements,
+            families,
+            category,
+            inStore,
+            pageNumber,
+            pageSize,
+            rarities,
+            tag,
+        })
+    }
 
     @Get("items")
     @ApiQuery({ name: "nameOrId", required: false })
@@ -38,7 +57,7 @@ export class DitlepApiController {
     @ApiQuery({ name: "pageSize", required: false })
     @ApiQuery({ name: "group", required: false })
     async getItems(
-        @Query("nameOrId") nameOrId?: string | number,
+        @Query("nameOrId") nameOrId?: string,
         @Query("sort") sort?: string,
         @Query("pageNumber") pageNumber?: number,
         @Query("pageSize") pageSize?: number,
