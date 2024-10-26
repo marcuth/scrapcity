@@ -1,30 +1,32 @@
-import { ValidationPipe } from "@nestjs/common"
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger"
 import { NestFactory } from "@nestjs/core"
-import * as dotenv from "dotenv"
 
+import { INestApplication } from "@nestjs/common"
+
+import configHelper from "./helpers/config.helper"
 import { AppModule } from "./app.module"
 
-dotenv.config()
+function createSwaggerDocs(app: INestApplication<any>) {
+    const config = new DocumentBuilder()
+        .setTitle("ScrapCity")
+        .setDescription("Dragon City Data API")
+        .setVersion("0.1")
+        .build()
+
+    const document = SwaggerModule.createDocument(app, config)
+
+    SwaggerModule.setup("docs", app, document)
+}
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
-    const port = process.env.PORT ?? 3000
 
-    app.useGlobalPipes(
-        new ValidationPipe({
-            whitelist: true,
-            transform: true,
-            skipMissingProperties: false,
-        }),
-    )
+    app.useGlobalPipes(configHelper.app.validationPipe)
+    app.enableCors(configHelper.app.corsOptions)
 
-    app.enableCors({
-        origin: true,
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-        credentials: true,
-    })
+    createSwaggerDocs(app)
 
-    await app.listen(port)
+    await app.listen(configHelper.app.port)
 }
 
 bootstrap()
