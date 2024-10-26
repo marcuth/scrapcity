@@ -123,6 +123,9 @@ export class DitlepApiService {
         })
 
         const path = `?${query}`
+        const data = this.fetchData(path)
+
+        return data
     }
 
     async getAllianceChestRanges() {
