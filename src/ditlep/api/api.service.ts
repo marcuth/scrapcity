@@ -3,12 +3,13 @@ import axios from "axios"
 import qs from "qs"
 
 type GetDragonOptions = {
-    nameOrId?: string
+    nameOrId?: string | number
     rarities?: string[]
     breedable?: boolean
     elements?: string[]
     families?: string[]
     inStore?: boolean
+    category?: number
     pageNumber?: number
     pageSize?: number
     tag?: string
@@ -23,9 +24,17 @@ type GetAllArticlesOptions = {
 export class DitlepApiService {
     private readonly baseUrl = "https://www.ditlep.com"
 
-    private async fetchData(path: string): Promise<any> {
+    private async fetchData(path: string, method?: string): Promise<any> {
         const url = `${this.baseUrl}${path}`
-        const response = await axios.get(url)
+
+        const response = await axios.request({
+            url: url,
+            method: method ?? "GET",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            }
+        })
+
         return response.data
     }
 
@@ -103,7 +112,8 @@ export class DitlepApiService {
         inStore,
         pageNumber,
         pageSize,
-        tag
+        tag,
+        category
     }: GetDragonOptions) {
         const query = qs.stringify({
             dragoName: nameOrId,
@@ -114,11 +124,12 @@ export class DitlepApiService {
             inStore: inStore ? "true" : "false",
             page: pageNumber,
             pageSize: pageSize,
+            category: category,
             tag: tag
         })
 
         const path = `/Dragon/Search?${query}`
-        const data = this.fetchData(path)
+        const data = this.fetchData(path, "POST")
 
         return data
     }
@@ -160,5 +171,10 @@ export class DitlepApiService {
         return data
     }
 
-    
+    async getDragonTv(month?: number) {
+        const query = qs.stringify({ month: month })
+        const path = `/DragonTv/Get?${query}`
+        const data = this.fetchData(path)
+        return data
+    }
 }

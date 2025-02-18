@@ -1,25 +1,46 @@
-import { Controller, Get, Query } from "@nestjs/common"
+import { Controller, DefaultValuePipe, Get, ParseArrayPipe, ParseBoolPipe, ParseIntPipe, Query } from "@nestjs/common"
+import { DitlepApiService } from "./api.service"
 
 @Controller("ditlep/api")
 export class DitlepApiController {
+    constructor(private readonly ditlepApiService: DitlepApiService) {}
+
     @Get("alliances/chests")
-    async getAllianceChests() {}
+    async getAllianceChests() {
+        return await this.ditlepApiService.getAllianceChestRanges()
+    }
 
     @Get("dragon-tv")
-    async getDragonTV() {}
+    async getDragonTv() {
+        return await this.ditlepApiService.getDragonTv()
+    }
 
     @Get("dragons")
     async getDragons(
-        @Query("nameOrId") nameOrId?: string | number,
-        @Query("rarities") rarities?: string[],
-        @Query("elements") elements?: string,
-        @Query("pageNumber") pageNumber?: number,
-        @Query("pageSize") pageSize?: number,
-        @Query("category") categor?: number,
-        @Query("inStore") inStore?: boolean,
-        @Query("isBreedable") isBreedable?: boolean,
-        @Query("tag") tag?: string
-    ) {}
+        // @Query("nameOrId") nameOrId?: string | number,
+        // @Query("rarities", new ParseArrayPipe({ optional: true, items: String })) rarities?: string[],
+        // @Query("elements", new ParseArrayPipe({ optional: true, items: String })) elements?: string[],
+        // @Query("pageNumber", new ParseIntPipe({ optional: true })) pageNumber?: number,
+        // @Query("pageSize", new DefaultValuePipe(undefined), ParseIntPipe) pageSize?: number,
+        // @Query("category", new DefaultValuePipe(undefined), ParseIntPipe) category?: number,
+        // @Query("inStore", new ParseBoolPipe({ optional: true })) inStore?: boolean,
+        // @Query("breedable", new ParseBoolPipe({ optional: true })) breedable?: boolean,
+        // @Query("families", new ParseArrayPipe({ optional: true, items: String })) families?: string[],
+        // @Query("tag") tag?: string
+    ) {
+        return await this.ditlepApiService.getDragons({
+            // nameOrId: nameOrId,
+            // rarities: rarities,
+            // breedable: breedable,
+            // elements: elements,
+            // families: families,
+            // inStore: inStore,
+            // category: category,
+            // pageNumber: pageNumber,
+            // pageSize: pageSize,
+            // tag: tag
+        })
+    }
 
     @Get("items")
     async getItems(
