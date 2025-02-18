@@ -9,6 +9,10 @@ async function createSwaggerSpec(document: OpenAPIObject) {
 
     document.servers = [
         {
+            url: "http://localhost:3003",
+            description: "Development",
+        },
+        {
             url: "https://scrapcity.onrender.com/",
             description: "Production",
         },
