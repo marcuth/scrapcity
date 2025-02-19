@@ -1,19 +1,9 @@
 import { Injectable } from "@nestjs/common"
 import axios from "axios"
-import qs from "qs"
 
-type GetDragonOptions = {
-    nameOrId?: string | number
-    rarities?: string[]
-    breedable?: boolean
-    elements?: string[]
-    families?: string[]
-    inStore?: boolean
-    category?: number
-    pageNumber?: number
-    pageSize?: number
-    tag?: string
-}
+import { GetDragonsDto } from "./dtos/get-dragons.dto"
+import { GetItemsDto } from "./dtos/get-items.dto"
+import qs from "qs"
 
 type GetAllArticlesOptions = {
     pageSize?: number
@@ -44,18 +34,15 @@ export class DitlepApiService {
         return data
     }
 
-    async getAllArticles({
-        pageIndex,
-        pageSize
-    }: GetAllArticlesOptions) {
+    async getAllArticles({ pageIndex, pageSize }: GetAllArticlesOptions) {
         const query = qs.stringify({
             pageIndex: pageIndex || 0,
-            pageSize: pageSize || 10
+            pageSize: pageSize || 10,
         })
 
         const path = `/article/GetAllArticles?${query}`
         const data = this.fetchData(path)
-        
+
         return data
     }
 
@@ -106,30 +93,45 @@ export class DitlepApiService {
     async getDragons({
         nameOrId,
         rarities,
-        breedable,
+        isBreedable,
         elements,
         families,
         inStore,
+        category,
         pageNumber,
         pageSize,
         tag,
-        category
-    }: GetDragonOptions) {
+    }: GetDragonsDto) {
         const query = qs.stringify({
             dragoName: nameOrId,
             rarities: rarities ? rarities.join(",") : undefined,
-            breedable: breedable ? "true" : "false",
+            breedable: isBreedable ? "true" : "false",
             elements: elements ? elements.join(",") : undefined,
             families: families ? families.join(",") : undefined,
+            category: category ? category : undefined,
             inStore: inStore ? "true" : "false",
             page: pageNumber,
             pageSize: pageSize,
-            category: category,
-            tag: tag
+            tag: tag,
         })
 
         const path = `/Dragon/Search?${query}`
-        const data = this.fetchData(path, "POST")
+        const data = this.fetchData(path)
+
+        return data
+    }
+
+    async getItems({ group, nameOrId, pageNumber, pageSize, sort }: GetItemsDto) {
+        const query = qs.stringify({
+            dragoName: nameOrId,
+            page: pageNumber,
+            pageSize: pageSize,
+            sort: sort ? sort : undefined,
+            group: group ? group : undefined
+        })
+
+        const path = `?${query}`
+        const data = this.fetchData(path)
 
         return data
     }
@@ -167,13 +169,6 @@ export class DitlepApiService {
 
     async getArenas() {
         const path = "/Arena/GetArenas"
-        const data = this.fetchData(path)
-        return data
-    }
-
-    async getDragonTv(month?: number) {
-        const query = qs.stringify({ month: month })
-        const path = `/DragonTv/Get?${query}`
         const data = this.fetchData(path)
         return data
     }
