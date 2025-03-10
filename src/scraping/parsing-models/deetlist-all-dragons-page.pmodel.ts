@@ -1,10 +1,10 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import deetlistEventHtmlParsingModel from "./common/deetlist-event.pmodel"
+import pageMedatadaHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const dragonParsingModel = {
+const dragonHtmlParsingModel = {
     name: {
         query: ".drag",
         extractor: extractInnerText,
@@ -12,36 +12,36 @@ const dragonParsingModel = {
     pagePath: {
         extractor: extractAttribute("href"),
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     dragons: {
         query: ".drag_link:has(.drag)",
-        model: dragonParsingModel,
+        model: dragonHtmlParsingModel,
         isGroup: true,
     },
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     upcomingEvents: {
         query: "h3.see_ev.ev_upc ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistAllDragonPageParsingModel = {
+const deetlistAllDragonPageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMedatadaHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistAllDragonPageParsingModel
+export default deetlistAllDragonPageHtmlParsingModel

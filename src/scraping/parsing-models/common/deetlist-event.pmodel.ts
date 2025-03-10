@@ -1,6 +1,6 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-const deetlistEventParsingModel = {
+const deetlistEventHtmlParsingModel = {
     title: {
         query: ".ei",
         extractor: extractInnerText,
@@ -12,6 +12,6 @@ const deetlistEventParsingModel = {
     pagePath: {
         extractor: extractAttribute("href"),
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistEventParsingModel
+export default deetlistEventHtmlParsingModel

@@ -1,39 +1,39 @@
-import { ParsingModelValue } from "xcrap/parsing/page-parser.parsing"
-import { extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractInnerText, HtmlParsingModel } from "xcrap/parsing"
+import { HtmlParsingModelValue } from "xcrap/parsing/html-parser"
 
-import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import deetlistEventHtmlParsingModel from "./common/deetlist-event.pmodel"
+import pageMedatadaHtmlParsingModel from "./common/page-metadata.pmodel"
 
-export const dragonsDataScriptField: ParsingModelValue = {
+export const dragonsDataScriptField: HtmlParsingModelValue = {
     query: "#low_menu",
     extractor: (element) => {
         return extractInnerText(element.previousElementSibling)
     },
 }
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     upcomingEvents: {
         query: "h3.see_ev.ev_upc ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistHomePageParsingModel = {
+const deetlistHomePageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMedatadaHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistHomePageParsingModel
+export default deetlistHomePageHtmlParsingModel

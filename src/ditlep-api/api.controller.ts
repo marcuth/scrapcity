@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from "@nestjs/common"
+import { Controller, Get, ParseIntPipe, Query } from "@nestjs/common"
 import { ApiQuery } from "@nestjs/swagger"
 
 import { DitlepApiService } from "./api.service"
@@ -17,6 +17,19 @@ export class DitlepApiController {
         return await this.ditlepApiService.getDragonTv()
     }
 
+    @Get("articles")
+    @ApiQuery({ name: "pageIndex", required: false })
+    @ApiQuery({ name: "pageSize", required: false })
+    async getAllArticles(
+        @Query("pageSize", new ParseIntPipe({ optional: true })) pageSize?: number,
+        @Query("pageIndex", new ParseIntPipe({ optional: true })) pageIndex?: number,
+    ) {
+        return await this.ditlepApiService.getAllArticles({
+            pageIndex: pageIndex,
+            pageSize: pageSize
+        })
+    }
+
     @Get("dragons")
     @ApiQuery({ name: "nameOrId", required: false })
     @ApiQuery({ name: "rarities", required: false })
@@ -33,8 +46,8 @@ export class DitlepApiController {
         @Query("rarities") rarities?: string[],
         @Query("elements") elements?: string[],
         @Query("pageNumber") pageNumber?: number,
-        @Query("pageSize") pageSize?: number,
-        @Query("category") category?: number,
+        @Query("pageSize", ParseIntPipe) pageSize?: number,
+        @Query("category", ParseIntPipe) category?: number,
         @Query("inStore") inStore?: boolean,
         @Query("families") families?: string[],
         @Query("isBreedable") isBreedable?: boolean,
@@ -63,8 +76,8 @@ export class DitlepApiController {
     async getItems(
         @Query("nameOrId") nameOrId?: string,
         @Query("sort") sort?: string,
-        @Query("pageNumber") pageNumber?: number,
-        @Query("pageSize") pageSize?: number,
+        @Query("pageNumber", ParseIntPipe) pageNumber?: number,
+        @Query("pageSize", ParseIntPipe) pageSize?: number,
         @Query("group") group?: string,
     ) {}
 

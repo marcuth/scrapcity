@@ -1,10 +1,10 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
-import pageMetadataParsingModel from "./common/page-metadata.pmodel"
+import deetlistEventHtmlParsingModel from "./common/deetlist-event.pmodel"
+import pageMetadataHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const attackParsingModel = {
+const attackHtmlParsingModel = {
     iconClassName: {
         query: ".t_attck",
         extractor: extractAttribute("class"),
@@ -13,7 +13,7 @@ const attackParsingModel = {
         query: ".att_desc",
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
 const detailsRowParsignModel = {
     key: {
@@ -23,9 +23,9 @@ const detailsRowParsignModel = {
     value: {
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const dragonParsingModel = {
+const dragonHtmlParsingModel = {
     name: {
         query: "h1",
         extractor: extractInnerText,
@@ -54,12 +54,12 @@ const dragonParsingModel = {
     },
     basicAttacks: {
         query: ".b_split .att_hold:nth-child(-n+4)",
-        model: attackParsingModel,
+        model: attackHtmlParsingModel,
         isGroup: true,
     },
     trainableAttacks: {
         query: ".b_split+ .b_split .att_hold",
-        model: attackParsingModel,
+        model: attackHtmlParsingModel,
         isGroup: true,
     },
     weaknessElementClassNames: {
@@ -76,35 +76,35 @@ const dragonParsingModel = {
         query: ".norm_h+ p",
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     dragon: {
         query: "#body_content",
-        model: dragonParsingModel,
+        model: dragonHtmlParsingModel,
     },
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     upcomingEvents: {
         query: "h3.see_ev.ev_upc ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistDragonPageParsingModel = {
+const deetlistDragonPageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMetadataParsingModel,
+        model: pageMetadataHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistDragonPageParsingModel
+export default deetlistDragonPageHtmlParsingModel

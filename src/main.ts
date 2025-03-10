@@ -32,15 +32,21 @@ function createSwaggerDocs(app: INestApplication<any>) {
     const document = SwaggerModule.createDocument(app, config)
 
     SwaggerModule.setup("docs", app, document)
+
+    return document
 }
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
 
     app.useGlobalPipes(configHelper.app.validationPipe)
-    app.enableCors(configHelper.app.corsOptions)
+    app.enableCors(configHelper.app.cors)
 
-    createSwaggerDocs(app)
+    const document = createSwaggerDocs(app)
+
+    if (!configHelper.isProduction) {
+        createSwaggerSpec(document)
+    }
 
     await app.listen(configHelper.app.port)
 }

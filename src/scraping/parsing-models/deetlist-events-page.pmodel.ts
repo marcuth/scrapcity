@@ -1,41 +1,41 @@
-import { extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import eventPageBodyEventParsingModel from "./common/deetlist-event.pmodel"
-import pageMetadataParsingModel from "./common/page-metadata.pmodel"
+import eventPageBodyEventHtmlParsingModel from "./common/deetlist-event.pmodel"
+import pageMetadataHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     heading: {
         query: "h1",
         extractor: extractInnerText,
     },
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
-        model: eventPageBodyEventParsingModel,
+        model: eventPageBodyEventHtmlParsingModel,
         isGroup: true,
     },
     upcomingEvents: {
         query: "h3.see_ev.ev_upc ~ a.eata",
-        model: eventPageBodyEventParsingModel,
+        model: eventPageBodyEventHtmlParsingModel,
         isGroup: true,
     },
     pastEvents: {
         query: "h3.see_ev.ev_past ~ a.eata",
-        model: eventPageBodyEventParsingModel,
+        model: eventPageBodyEventHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistEventsPageParsingModel = {
+const deetlistEventsPageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMetadataParsingModel,
+        model: pageMetadataHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistEventsPageParsingModel
+export default deetlistEventsPageHtmlParsingModel

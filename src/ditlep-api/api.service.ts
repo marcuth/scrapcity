@@ -1,20 +1,17 @@
 import { Injectable } from "@nestjs/common"
 import axios from "axios"
-
-import { GetDragonsDto } from "./dtos/get-dragons.dto"
-import { GetItemsDto } from "./dtos/get-items.dto"
 import qs from "qs"
 
-type GetAllArticlesOptions = {
-    pageSize?: number
-    pageIndex?: number
-}
+import { GetAllArticles } from "./intefaces/get-all-articles.interface"
+import { GetAllArticlesDto } from "./dtos/get-all-articles.dto"
+import { GetDragonsDto } from "./dtos/get-dragons.dto"
+import { GetItemsDto } from "./dtos/get-items.dto"
 
 @Injectable()
 export class DitlepApiService {
     private readonly baseUrl = "https://www.ditlep.com"
 
-    private async fetchData(path: string, method?: string): Promise<any> {
+    private async fetchData<T extends any>(path: string, method?: string): Promise<T> {
         const url = `${this.baseUrl}${path}`
 
         const response = await axios.request({
@@ -22,7 +19,7 @@ export class DitlepApiService {
             method: method ?? "GET",
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
-            }
+            },
         })
 
         return response.data
@@ -34,14 +31,14 @@ export class DitlepApiService {
         return data
     }
 
-    async getAllArticles({ pageIndex, pageSize }: GetAllArticlesOptions) {
+    async getAllArticles({ pageIndex, pageSize }: GetAllArticlesDto) {
         const query = qs.stringify({
             pageIndex: pageIndex || 0,
             pageSize: pageSize || 10,
         })
 
         const path = `/article/GetAllArticles?${query}`
-        const data = this.fetchData(path)
+        const data = this.fetchData<GetAllArticles>(path, "POST")
 
         return data
     }
@@ -127,7 +124,7 @@ export class DitlepApiService {
             page: pageNumber,
             pageSize: pageSize,
             sort: sort ? sort : undefined,
-            group: group ? group : undefined
+            group: group ? group : undefined,
         })
 
         const path = `?${query}`
@@ -171,5 +168,9 @@ export class DitlepApiService {
         const path = "/Arena/GetArenas"
         const data = this.fetchData(path)
         return data
+    }
+
+    async getDragonTv() {
+        return {}
     }
 }

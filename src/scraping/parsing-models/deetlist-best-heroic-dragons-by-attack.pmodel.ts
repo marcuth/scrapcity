@@ -1,9 +1,9 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import pageMedatadaHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const dragonParsingModel = {
+const dragonHtmlParsingModel = {
     name: {
         query: ".nnam",
         extractor: extractInnerText,
@@ -21,26 +21,26 @@ const dragonParsingModel = {
         query: ".attk",
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     dragons: {
         query: ".dlist",
-        model: dragonParsingModel,
+        model: dragonHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistHeroicDragonsCategorizedByAttacksParsingModel = {
+const deetlistHeroicDragonsCategorizedByAttacksHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMedatadaHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistHeroicDragonsCategorizedByAttacksParsingModel
+export default deetlistHeroicDragonsCategorizedByAttacksHtmlParsingModel

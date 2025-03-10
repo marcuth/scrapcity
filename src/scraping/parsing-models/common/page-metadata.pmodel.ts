@@ -1,6 +1,6 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-const pageMedatadaParsingModel = {
+const pageMedatadaHtmlParsingModel = {
     title: {
         query: "title",
         extractor: extractInnerText,
@@ -37,6 +37,6 @@ const pageMedatadaParsingModel = {
         query: "link[rel='shortcut icon']",
         extractor: extractAttribute("href"),
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default pageMedatadaParsingModel
+export default pageMedatadaHtmlParsingModel

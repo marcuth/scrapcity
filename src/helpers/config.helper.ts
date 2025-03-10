@@ -20,12 +20,12 @@ const configHelper = {
             origin: process.env.CORS_ORIGIN || true,
             credentials: true,
         },
+        validationPipe: new ValidationPipe({
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            transform: true,
+        }),
     },
-    defaultValidationPipe: new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-    }),
 }
 
 export default configHelper

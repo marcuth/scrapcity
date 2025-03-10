@@ -1,6 +1,6 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-const deetlistEventDragonParsingModel = {
+const deetlistEventDragonHtmlParsingModel = {
     name: {
         query: ".pan_ic",
         extractor: extractInnerText,
@@ -22,6 +22,6 @@ const deetlistEventDragonParsingModel = {
         query: "a",
         extractor: extractAttribute("href"),
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistEventDragonParsingModel
+export default deetlistEventDragonHtmlParsingModel

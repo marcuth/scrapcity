@@ -1,9 +1,9 @@
-import { extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import pageMedatadaHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const missionParsingModel = {
+const missionHtmlParsingModel = {
     name: {
         query: ".mh",
         extractor: extractInnerText,
@@ -28,25 +28,25 @@ const missionParsingModel = {
         query: ".mz:nth-child(5) .m2",
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const nodeParsingModel = {
+const nodeHtmlParsingModel = {
     missions: {
         query: ".ml",
-        model: missionParsingModel,
+        model: missionHtmlParsingModel,
         isGroup: true,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const lapParsingModel = {
+const lapHtmlParsingModel = {
     nodes: {
         query: ".nn",
-        model: nodeParsingModel,
+        model: nodeHtmlParsingModel,
         isGroup: true,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     name: {
         query: "h1",
         extractor: (node) => node.textContent.trim(),
@@ -57,21 +57,21 @@ const pageBodyParsingModel = {
     },
     laps: {
         query: ".hl",
-        model: lapParsingModel,
+        model: lapHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistHeroicRacesPageParsingModel = {
+const deetlistHeroicRacesPageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMedatadaHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistHeroicRacesPageParsingModel
+export default deetlistHeroicRacesPageHtmlParsingModel

@@ -1,10 +1,10 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import deetlistEventHtmlParsingModel from "./common/deetlist-event.pmodel"
+import pageMedatadaHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const nodeParsingModel = {
+const nodeHtmlParsingModel = {
     title: {
         query: ".mi_con",
         extractor: extractInnerText,
@@ -13,9 +13,9 @@ const nodeParsingModel = {
         query: ".mii_tota b",
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pathDragonParsingModel = {
+const pathDragonHtmlParsingModel = {
     imagePath: {
         query: ".mi_i_hld",
         extractor: extractAttribute("src"),
@@ -40,20 +40,20 @@ const pathDragonParsingModel = {
         query: "a",
         extractor: extractAttribute("href"),
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pathParsingModel = {
+const pathHtmlParsingModel = {
     dragonName: {
         query: "h3",
         extractor: extractInnerText,
     },
     dragon: {
         query: ".ev_ds",
-        model: pathDragonParsingModel,
+        model: pathDragonHtmlParsingModel,
     },
     nodes: {
         query: ".miihold",
-        model: nodeParsingModel,
+        model: nodeHtmlParsingModel,
         isGroup: true,
     },
     nodeCosts: {
@@ -61,9 +61,9 @@ const pathParsingModel = {
         extractor: extractInnerText,
         fieldType: "multiple",
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const dragonSummaryInfoParsingModel = {
+const dragonSummaryInfoHtmlParsingModel = {
     name: {
         query: ".img_rhld+ div div:nth-child(1)",
         extractor: extractInnerText,
@@ -72,45 +72,45 @@ const dragonSummaryInfoParsingModel = {
         query: ".img_rhld+ div div:nth-child(2)",
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     name: {
         query: "h1",
         extractor: extractInnerText,
     },
     dragonSummaryInfos: {
         query: ".da",
-        model: dragonSummaryInfoParsingModel,
+        model: dragonSummaryInfoHtmlParsingModel,
         isGroup: true,
     },
     paths: {
         query: ".ee",
-        model: pathParsingModel,
+        model: pathHtmlParsingModel,
         isGroup: true,
     },
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     upcomingEvents: {
         query: "h3.see_ev.ev_upc ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistMazeIslandsPageParsingModel = {
+const deetlistMazeIslandsPageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMedatadaHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistMazeIslandsPageParsingModel
+export default deetlistMazeIslandsPageHtmlParsingModel

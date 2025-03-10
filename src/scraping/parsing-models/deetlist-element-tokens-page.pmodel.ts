@@ -1,9 +1,9 @@
-import { extractAttribute, extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractAttribute, extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import pageMedatadaHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const elementTokenParsingModel = {
+const elementTokenHtmlParsingModel = {
     name: {
         query: ".emel",
         extractor: extractInnerText,
@@ -15,26 +15,26 @@ const elementTokenParsingModel = {
     pagePath: {
         extractor: extractAttribute("href"),
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     elementTokens: {
         query: "a:has(.emel)",
-        model: elementTokenParsingModel,
+        model: elementTokenHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistElementTokensPageParsingModel = {
+const deetlistElementTokensPageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMedatadaHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistElementTokensPageParsingModel
+export default deetlistElementTokensPageHtmlParsingModel

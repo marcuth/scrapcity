@@ -1,11 +1,11 @@
-import { extractInnerText, ParsingModel } from "xcrap/parsing"
+import { extractInnerText, HtmlParsingModel } from "xcrap/parsing"
 
-import deetlistEventDragonParsingModel from "./common/deetlist-event-dragon.pmodel"
-import deetlistEventParsingModel from "./common/deetlist-event.pmodel"
-import pageMedatadaParsingModel from "./common/page-metadata.pmodel"
+import deetlistEventDragonHtmlParsingModel from "./common/deetlist-event-dragon.pmodel"
+import deetlistEventHtmlParsingModel from "./common/deetlist-event.pmodel"
+import pageMedatadaHtmlParsingModel from "./common/page-metadata.pmodel"
 import { dragonsDataScriptField } from "./deetlist-home-page.pmodel"
 
-const missionParsingModel = {
+const missionHtmlParsingModel = {
     title: {
         query: ".miss_con",
         extractor: extractInnerText,
@@ -14,60 +14,60 @@ const missionParsingModel = {
         query: ".moves_h",
         extractor: extractInnerText,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const pageBodyParsingModel = {
+const pageBodyHtmlParsingModel = {
     name: {
         query: "h1",
         extractor: extractInnerText,
     },
     dragons: {
         query: ".over",
-        model: deetlistEventDragonParsingModel,
+        model: deetlistEventDragonHtmlParsingModel,
         isGroup: true,
     },
     missions1: {
         query: ".m_h[id^='1_']",
-        model: missionParsingModel,
+        model: missionHtmlParsingModel,
         isGroup: true,
     },
     missions2: {
         query: ".m_h[id^='2_']",
-        model: missionParsingModel,
+        model: missionHtmlParsingModel,
         isGroup: true,
     },
     missions3: {
         query: ".m_h[id^='3_']",
-        model: missionParsingModel,
+        model: missionHtmlParsingModel,
         isGroup: true,
     },
     missions4: {
         query: ".m_h[id^='4_']",
-        model: missionParsingModel,
+        model: missionHtmlParsingModel,
         isGroup: true,
     },
     currentEvents: {
         query: "h3.see_ev.ev_evs ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     upcomingEvents: {
         query: "h3.see_ev.ev_upc ~ a.eata",
-        model: deetlistEventParsingModel,
+        model: deetlistEventHtmlParsingModel,
         isGroup: true,
     },
     dragonsDataScript: dragonsDataScriptField,
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-const deetlistPuzzleIslandsPageParsingModel = {
+const deetlistPuzzleIslandsPageHtmlParsingModel = {
     metadata: {
         query: "head",
-        model: pageMedatadaParsingModel,
+        model: pageMedatadaHtmlParsingModel,
     },
     body: {
         query: "body",
-        model: pageBodyParsingModel,
+        model: pageBodyHtmlParsingModel,
     },
-} satisfies ParsingModel
+} satisfies HtmlParsingModel
 
-export default deetlistPuzzleIslandsPageParsingModel
+export default deetlistPuzzleIslandsPageHtmlParsingModel
