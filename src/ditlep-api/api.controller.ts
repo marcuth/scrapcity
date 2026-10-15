@@ -26,7 +26,7 @@ export class DitlepApiController {
     ) {
         return await this.ditlepApiService.getAllArticles({
             pageIndex: pageIndex,
-            pageSize: pageSize
+            pageSize: pageSize,
         })
     }
 

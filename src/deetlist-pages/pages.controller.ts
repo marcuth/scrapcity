@@ -1,103 +1,48 @@
-import { Controller, Get, Param } from "@nestjs/common"
+import { ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger"
+import { Controller, Get, Param, Query } from "@nestjs/common"
 
+import { GetElementsQueryDto } from "./dto/get-elements-query.dto"
+import { GetDragonsQueryDto } from "./dto/get-dragons-query.dto"
+import { GetEventsQueryDto } from "./dto/get-events-query.dto"
 import { DeetlistPagesService } from "./pages.service"
 
-@Controller("deetlist/pages")
+@ApiTags("Deetlist")
+@Controller("deetlist")
 export class DeetlistPagesController {
     constructor(private readonly deetlistPagesService: DeetlistPagesService) {}
 
     @Get("home")
+    @ApiOperation({ summary: "Obtém dados da página inicial do Deetlist (eventos, metadados e scripts)" })
     async getHomePage() {
-        return await this.deetlistPagesService.scrapeHomePageData()
+        return await this.deetlistPagesService.getHomePage()
     }
 
-    @Get("events")
-    async getEventsPage() {
-        return await this.deetlistPagesService.scrapeEventsPageData()
-    }
-
-    @Get("events/fog-islands")
-    async getFogIslandsEventPage() {
-        return await this.deetlistPagesService.scrapeFogIslandsEventPageData()
-    }
-
-    @Get("events/grid-islands")
-    async getGridIslandsEventPage() {
-        return await this.deetlistPagesService.scrapeGridIslandsEventPageData()
-    }
-
-    @Get("events/heroic-races")
-    async getHeroicRacesEventPage() {
-        return await this.deetlistPagesService.scrapeHeroicRacesEventPageData()
-    }
-
-    @Get("events/maze-islands")
-    async getMazeIslandsEventPage() {
-        return await this.deetlistPagesService.scrapeMazeIslandsEventPageData()
-    }
-
-    @Get("events/runner-islands")
-    async getRunnerIslandsEventPage() {
-        return await this.deetlistPagesService.scrapeRunnerIslandsEventPageData()
-    }
-
-    @Get("events/puzzle-islands")
-    async getPuzzleIslandsEventPage() {
-        return await this.deetlistPagesService.scrapePuzzleIslandsEventPageData()
-    }
-
-    @Get("events/tower-islands")
-    async getTowerIslandsEventPage() {
-        return await this.deetlistPagesService.scrapeTowerIslandsEventPageData()
-    }
-
-    @Get("dragons/all")
-    async getAllDragonsPage() {
-        return await this.deetlistPagesService.scrapeAllDragonsPageData()
-    }
-
-    @Get("dragons/breedable-category-5")
-    async getAllBreedableCategory5DragonsPage() {
-        return await this.deetlistPagesService.scrapeAllBreedableCategory5DragonsPageData()
-    }
-
-    @Get("dragons/all-heroic")
-    async getAllHeroicDragonsPage() {
-        return await this.deetlistPagesService.scrapeAllHeroicDragonsPageData()
-    }
-
-    @Get("dragons/breedable-category-9")
-    async getAllBreedableCategory9DragonsPage() {
-        return await this.deetlistPagesService.scrapeAllBreedableCategory9DragonsPageData()
-    }
-
-    @Get("dragons/breedable-legendary")
-    async getAllBreedableLegendaryDragonsPage() {
-        return await this.deetlistPagesService.scrapeAllBreedableLegendaryDragonsPageData()
-    }
-
-    @Get("dragons/heroic-categorize-by-attacks")
-    async getHeroicDragonsCategorizedByAttacksPage() {
-        return await this.deetlistPagesService.scrapeHeroicDragonsCategorizedByAttacksPageData()
-    }
-
-    @Get("element-tokens")
-    async getElementTokensPage() {
-        return await this.deetlistPagesService.scrapeElementTokensPageData()
-    }
-
-    @Get("elements")
-    async getElementsPage() {
-        return await this.deetlistPagesService.scrapeElementsPageData()
-    }
-
-    @Get("dragons/newest")
-    async getNewestDragonsPageData() {
-        return await this.deetlistPagesService.scrapeNewestDragonsPageData()
+    @Get("dragons")
+    @ApiOperation({
+        summary: "Lista dragões com filtros por tipo (newest, all-heroic, heroic-by-attack) ou categoria breedable",
+    })
+    async getDragons(@Query() query: GetDragonsQueryDto) {
+        return await this.deetlistPagesService.getDragons(query)
     }
 
     @Get("dragons/:name")
-    async getDragonPage(@Param("name") name: string) {
-        return await this.deetlistPagesService.scrapeDragonPageData(name)
+    @ApiOperation({ summary: "Obtém detalhes completos de um dragão específico pelo nome/slug" })
+    @ApiParam({ name: "name", description: "Nome ou slug do dragão (ex: high-master-karma)" })
+    async getDragonByName(@Param("name") name: string) {
+        return await this.deetlistPagesService.getDragonByName(name)
+    }
+
+    @Get("events")
+    @ApiOperation({
+        summary: "Obtém eventos gerais ou específicos de ilha (fog, grid, race, maze, runner, puzzle, tower)",
+    })
+    async getEvents(@Query() query: GetEventsQueryDto) {
+        return await this.deetlistPagesService.getEvents(query)
+    }
+
+    @Get("elements")
+    @ApiOperation({ summary: "Lista elementos do jogo ou tokens de elementos" })
+    async getElements(@Query() query: GetElementsQueryDto) {
+        return await this.deetlistPagesService.getElements(query)
     }
 }

@@ -1,168 +1,134 @@
+import { ExtractionModel } from "@xcrap/extractor"
 import { Injectable } from "@nestjs/common"
-import { AxiosClient } from "xcrap/clients"
+import { FetchClient } from "@xcrap/core"
 
-import deetlistAllBreedableCategory9DragonsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-all-breedable-category-9-dragons-page.pmodel"
-import deetlistAllBreedableCategory5DragonsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-all-breedable-category-5-dragons-page.pmodel"
-import deetlistAllBreedableLegendaryDragonsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-all-breedable-legendary-dragons-page.pmodel"
-import deetlistHeroicDragonsCategorizedByAttacksHtmlParsingModel from "../scraping/parsing-models/deetlist-best-heroic-dragons-by-attack.pmodel"
-import deetlistAllHeroicDragonsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-all-heroic-dragons-page.pmodel"
-import deetlistPuzzleIslandsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-puzzle-islands-page.pmodel"
-import deetlistElementTokensPageHtmlParsingModel from "../scraping/parsing-models/deetlist-element-tokens-page.pmodel"
-import deetlistNewestDragonsPageHtmlParsingModel from "../scraping/parsing-models/deetlits-newest-dragons-page.pmodel"
-import deetlistTowerIslandsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-tower-islands-page.pmodel"
-import deetlistHeroicRacesPageHtmlParsingModel from "../scraping/parsing-models/deetlist-heroic-races-page.pmodel"
-import deetlistGridIslandsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-grid-islands-page.pmodel"
-import deetlistRunnerIslandsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-runner-islands.pmodel"
-import deetlistFogIslandsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-fog-islands-page.pmodel"
-import deetlistAllDragonPageHtmlParsingModel from "../scraping/parsing-models/deetlist-all-dragons-page.pmodel"
-import deetlistMazeIslandsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-maze-island.pmodel"
-import deetlistElementsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-elements-page.pmodel"
-import deetlistEventsPageHtmlParsingModel from "../scraping/parsing-models/deetlist-events-page.pmodel"
-import deetlistDragonPageHtmlParsingModel from "../scraping/parsing-models/deetlist-dragon-page.pmodel"
-import deetlistHomePageHtmlParsingModel from "../scraping/parsing-models/deetlist-home-page.pmodel"
-import { HtmlParser } from "xcrap/parsing"
+import {
+    deetlistAllDragonsPageExtractionModel,
+    deetlistAllHeroicDragonsPageExtractionModel,
+    deetlistBreedableCategory5DragonsPageExtractionModel,
+    deetlistBreedableCategory9DragonsPageExtractionModel,
+    deetlistBreedableLegendaryDragonsPageExtractionModel,
+    deetlistDragonPageExtractionModel,
+    deetlistElementsPageExtractionModel,
+    deetlistElementTokensPageExtractionModel,
+    deetlistEventsPageExtractionModel,
+    deetlistFogIslandsPageExtractionModel,
+    deetlistGridIslandsPageExtractionModel,
+    deetlistHeroicDragonsByAttackExtractionModel,
+    deetlistHeroicRacesPageExtractionModel,
+    deetlistHomePageExtractionModel,
+    deetlistMazeIslandsPageExtractionModel,
+    deetlistNewestDragonsPageExtractionModel,
+    deetlistPuzzleIslandsPageExtractionModel,
+    deetlistRunnerIslandsPageExtractionModel,
+    deetlistTowerIslandsPageExtractionModel,
+} from "../scraping/extraction-models/deetlist.extraction-models"
+import { DragonBreedableCategory, DragonFilter, GetDragonsQueryDto } from "./dto/get-dragons-query.dto"
+import { ElementViewType, GetElementsQueryDto } from "./dto/get-elements-query.dto"
+import { EventType, GetEventsQueryDto } from "./dto/get-events-query.dto"
 
 @Injectable()
 export class DeetlistPagesService {
     private readonly baseUrl = "https://www.deetlist.com/dragoncity"
-    private readonly client: AxiosClient
+    private readonly client: FetchClient
 
     constructor() {
-        this.client = new AxiosClient({ 
-            parserType: "html"
-        })
+        this.client = new FetchClient()
     }
 
-    async scrapeHomePageData() {
-        const url = `${this.baseUrl}`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistHomePageHtmlParsingModel })
-        return pageData
+    private async extractPageData<T>(url: string, model: ExtractionModel<T>): Promise<T> {
+        const response = await this.client.fetch({ url })
+        const htmlParser = response.asHtmlParser()
+        return await htmlParser.extractModel({ model })
     }
 
-    async scrapeEventsPageData() {
-        const url = `${this.baseUrl}/events`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistEventsPageHtmlParsingModel })
-        return pageData
+    async getHomePage() {
+        return await this.extractPageData(this.baseUrl, deetlistHomePageExtractionModel)
     }
 
-    async scrapeHeroicRacesEventPageData() {
-        const url = `${this.baseUrl}/events/race`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistHeroicRacesPageHtmlParsingModel })
-        return pageData
+    async getDragons(query: GetDragonsQueryDto) {
+        if (query.breedable) {
+            switch (query.breedable) {
+                case DragonBreedableCategory.CAT_5:
+                    return await this.extractPageData(
+                        `${this.baseUrl}/dragons/report/cat5_breedable.php`,
+                        deetlistBreedableCategory5DragonsPageExtractionModel,
+                    )
+                case DragonBreedableCategory.CAT_9:
+                    return await this.extractPageData(
+                        `${this.baseUrl}/dragons/report/cat9_breedable.php`,
+                        deetlistBreedableCategory9DragonsPageExtractionModel,
+                    )
+                case DragonBreedableCategory.LEGENDARY:
+                    return await this.extractPageData(
+                        `${this.baseUrl}/dragons/report/leg_breedable.php`,
+                        deetlistBreedableLegendaryDragonsPageExtractionModel,
+                    )
+            }
+        }
+
+        switch (query.filter) {
+            case DragonFilter.NEWEST:
+                return await this.extractPageData(
+                    `${this.baseUrl}/new-dragons/`,
+                    deetlistNewestDragonsPageExtractionModel,
+                )
+            case DragonFilter.ALL_HEROIC:
+                return await this.extractPageData(
+                    `${this.baseUrl}/dragons/report/all_heroic.php`,
+                    deetlistAllHeroicDragonsPageExtractionModel,
+                )
+            case DragonFilter.HEROIC_BY_ATTACK:
+                return await this.extractPageData(
+                    `${this.baseUrl}/dragons/report/heroics_by_attack.php`,
+                    deetlistHeroicDragonsByAttackExtractionModel,
+                )
+            case DragonFilter.ALL:
+            default:
+                return await this.extractPageData(`${this.baseUrl}/all-dragons/`, deetlistAllDragonsPageExtractionModel)
+        }
     }
 
-    async scrapeMazeIslandsEventPageData() {
-        const url = `${this.baseUrl}/events/maze`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistMazeIslandsPageHtmlParsingModel })
-        return pageData
+    async getDragonByName(name: string) {
+        return await this.extractPageData(`${this.baseUrl}/dragon/${name}`, deetlistDragonPageExtractionModel)
     }
 
-    async scrapeRunnerIslandsEventPageData() {
-        const url = `${this.baseUrl}/events/runner`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistRunnerIslandsPageHtmlParsingModel })
-        return pageData
+    async getEvents(query: GetEventsQueryDto) {
+        switch (query.type) {
+            case EventType.FOG:
+                return await this.extractPageData(`${this.baseUrl}/events/fog`, deetlistFogIslandsPageExtractionModel)
+            case EventType.GRID:
+                return await this.extractPageData(`${this.baseUrl}/events/grid`, deetlistGridIslandsPageExtractionModel)
+            case EventType.RACE:
+                return await this.extractPageData(`${this.baseUrl}/events/race`, deetlistHeroicRacesPageExtractionModel)
+            case EventType.MAZE:
+                return await this.extractPageData(`${this.baseUrl}/events/maze`, deetlistMazeIslandsPageExtractionModel)
+            case EventType.RUNNER:
+                return await this.extractPageData(
+                    `${this.baseUrl}/events/runner`,
+                    deetlistRunnerIslandsPageExtractionModel,
+                )
+            case EventType.PUZZLE:
+                return await this.extractPageData(
+                    `${this.baseUrl}/events/puzzle`,
+                    deetlistPuzzleIslandsPageExtractionModel,
+                )
+            case EventType.TOWER:
+                return await this.extractPageData(
+                    `${this.baseUrl}/events/tower`,
+                    deetlistTowerIslandsPageExtractionModel,
+                )
+            case EventType.ALL:
+            default:
+                return await this.extractPageData(`${this.baseUrl}/events`, deetlistEventsPageExtractionModel)
+        }
     }
 
-    async scrapePuzzleIslandsEventPageData() {
-        const url = `${this.baseUrl}/events/puzzle`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistPuzzleIslandsPageHtmlParsingModel })
-        return pageData
-    }
+    async getElements(query: GetElementsQueryDto) {
+        if (query.type === ElementViewType.TOKENS) {
+            return await this.extractPageData(`${this.baseUrl}/tokens/`, deetlistElementTokensPageExtractionModel)
+        }
 
-    async scrapeGridIslandsEventPageData() {
-        const url = `${this.baseUrl}/events/grid`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistGridIslandsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeFogIslandsEventPageData() {
-        const url = `${this.baseUrl}/events/fog`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistFogIslandsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeTowerIslandsEventPageData() {
-        const url = `${this.baseUrl}/events/tower`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistTowerIslandsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeAllDragonsPageData() {
-        const url = `${this.baseUrl}/all-dragons/`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistAllDragonPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeHeroicDragonsCategorizedByAttacksPageData() {
-        const url = `${this.baseUrl}/dragons/report/heroics_by_attack.php`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistHeroicDragonsCategorizedByAttacksHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeNewestDragonsPageData() {
-        const url = `${this.baseUrl}/new-dragons/`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistNewestDragonsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeAllHeroicDragonsPageData() {
-        const url = `${this.baseUrl}/dragons/report/all_heroic.php`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistAllHeroicDragonsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeAllBreedableCategory5DragonsPageData() {
-        const url = `${this.baseUrl}/dragons/report/cat5_breedable.php`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistAllBreedableCategory5DragonsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeAllBreedableCategory9DragonsPageData() {
-        const url = `${this.baseUrl}/dragons/report/cat9_breedable.php`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistAllBreedableCategory9DragonsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeAllBreedableLegendaryDragonsPageData() {
-        const url = `${this.baseUrl}/dragons/report/leg_breedable.php`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistAllBreedableLegendaryDragonsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeElementTokensPageData() {
-        const url = `${this.baseUrl}/tokens/`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistElementTokensPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeElementsPageData() {
-        const url = `${this.baseUrl}/elements/`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistElementsPageHtmlParsingModel })
-        return pageData
-    }
-
-    async scrapeDragonPageData(name: string) {
-        const url = `${this.baseUrl}/dragon/${name}`
-        const htmlParser = await this.client.get<HtmlParser>({ url: url })
-        const pageData = htmlParser.parseItem({ model: deetlistDragonPageHtmlParsingModel })
-        return pageData
+        return await this.extractPageData(`${this.baseUrl}/elements/`, deetlistElementsPageExtractionModel)
     }
 }
